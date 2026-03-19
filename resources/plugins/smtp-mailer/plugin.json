@@ -1,0 +1,7 @@
+{
+    "name": "SMTP 메일러",
+    "description": "외부 SMTP 서버(Gmail, Naver, Kakao, 자체 서버 등)를 통해 메일을 발송합니다. 활성화 시 서버 내장 sendmail 대신 SMTP를 사용합니다.",
+    "version": "1.0.0",
+    "author": "Laraboard",
+    "has_settings": true
+}

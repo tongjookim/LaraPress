@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sudo -u www-data php -r \"\ndefine\\('LARAVEL_START', microtime\\(true\\)\\);\nrequire '/home/laraboard/www/vendor/autoload.php';\n\\\\$app = require '/home/laraboard/www/bootstrap/app.php';\n\\\\$kernel = \\\\$app->make\\(\\\\Illuminate\\\\Contracts\\\\Http\\\\Kernel::class\\);\n\\\\$request = \\\\Illuminate\\\\Http\\\\Request::create\\('/admin/plugins', 'GET', [], [], [], [\n    'HTTP_HOST' => 'laraboard.swnest.net',\n    'HTTP_ACCEPT' => 'text/html',\n]\\);\n\\\\Illuminate\\\\Support\\\\Facades\\\\Auth::loginUsingId\\(1\\);\ntry {\n    \\\\$response = \\\\$kernel->handle\\(\\\\$request\\);\n    echo 'Status: ' . \\\\$response->getStatusCode\\(\\) . PHP_EOL;\n    if \\(\\\\$response->getStatusCode\\(\\) >= 400\\) {\n        echo substr\\(\\\\$response->getContent\\(\\), 0, 800\\);\n    } else {\n        echo 'OK';\n    }\n} catch\\(\\\\Throwable \\\\$e\\) {\n    echo get_class\\(\\\\$e\\).': '.\\\\$e->getMessage\\(\\).PHP_EOL;\n    echo \\\\$e->getFile\\(\\).':'.\\\\$e->getLine\\(\\);\n}\n\" 2>&1)",
+      "Bash(php artisan:*)"
+    ]
+  }
+}
