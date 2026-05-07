@@ -68,7 +68,7 @@ if (isset($_GET['reset'])) {
     @unlink($rootDir . '/bootstrap/cache/config.php');
     @unlink($rootDir . '/bootstrap/cache/routes-v7.php');
     @unlink($rootDir . '/bootstrap/cache/services.php');
-    header('Location: index.php?step=1');
+    header('Location: index.php?step=0');
     exit;
 }
 
@@ -109,9 +109,13 @@ if ($alreadyInstalled) {
     exit;
 }
 
-$step = max(1, min(4, (int)($_GET['step'] ?? 1)));
+$step = max(0, min(4, (int)($_GET['step'] ?? 0)));
 
 // 단계 이동 가드: 세션 데이터 없이 앞 단계로 접근 시 되돌리기
+if ($step >= 1 && !isset($_SESSION['license_agreed'])) {
+    header('Location: index.php?step=0');
+    exit;
+}
 if ($step >= 3 && !isset($_SESSION['db_host'])) {
     header('Location: index.php?step=2');
     exit;
@@ -121,7 +125,7 @@ if ($step >= 4 && !isset($_SESSION['site_name'])) {
     exit;
 }
 
-$stepLabels = ['환경 확인', 'DB 설정', '사이트 설정', '설치 실행'];
+$stepLabels = ['라이선스 동의', '환경 확인', 'DB 설정', '사이트 설정', '설치 실행'];
 define('INSTALL_RUNNING', true);
 ?>
 <!DOCTYPE html>
@@ -149,7 +153,7 @@ define('INSTALL_RUNNING', true);
         <!-- 진행 단계 -->
         <div class="mb-8">
             <div class="flex items-start">
-                <?php for ($i = 1; $i <= 4; $i++): ?>
+                <?php for ($i = 0; $i <= 4; $i++): ?>
                 <div class="flex-1 <?= $i < 4 ? 'pr-2' : '' ?>">
                     <div class="flex items-center">
                         <div class="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0
@@ -159,7 +163,7 @@ define('INSTALL_RUNNING', true);
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
                             </svg>
                             <?php else: ?>
-                            <?= $i ?>
+                            <?= $i + 1 ?>
                             <?php endif; ?>
                         </div>
                         <?php if ($i < 4): ?>
@@ -167,7 +171,7 @@ define('INSTALL_RUNNING', true);
                         <?php endif; ?>
                     </div>
                     <p class="text-xs mt-2 <?= $step === $i ? 'text-purple-700 font-semibold' : 'text-gray-400' ?>">
-                        <?= $stepLabels[$i - 1] ?>
+                        <?= $stepLabels[$i] ?>
                     </p>
                 </div>
                 <?php endfor; ?>
@@ -178,6 +182,7 @@ define('INSTALL_RUNNING', true);
         <div class="bg-white rounded-2xl shadow-lg p-8">
             <?php
             switch ($step) {
+                case 0: include __DIR__ . '/step0.php'; break;
                 case 1: include __DIR__ . '/step1.php'; break;
                 case 2: include __DIR__ . '/step2.php'; break;
                 case 3: include __DIR__ . '/step3.php'; break;
