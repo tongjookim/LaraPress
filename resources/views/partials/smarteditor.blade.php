@@ -95,7 +95,7 @@
 <script>
 (function () {
     var editorId  = '{{ $editorId }}';
-    var skinBase  = '/resources/plugins/smarteditor2/dist/';
+    var skinBase  = '/plugins/smarteditor2/dist/';
     var ta        = document.getElementById(editorId);
     var oEditors  = [];
 
@@ -108,7 +108,7 @@
     ════════════════════════════════════════════ */
     if (!isMobile) {
         var s = document.createElement('script');
-        s.src = '/resources/plugins/smarteditor2/dist/js/service/HuskyEZCreator.js';
+        s.src = '/plugins/smarteditor2/dist/js/service/HuskyEZCreator.js';
         s.charset = 'utf-8';
         s.onload = function () { initSmartEditor(); };
         document.head.appendChild(s);
