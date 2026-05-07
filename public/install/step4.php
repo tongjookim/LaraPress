@@ -8,8 +8,25 @@ if (!isset($_SESSION['db_host'], $_SESSION['site_name'], $_SESSION['admin_userna
 }
 
 $rootDir  = realpath(dirname(dirname(__DIR__)));
-$php      = PHP_BINARY;
 $artisan  = $rootDir . '/artisan';
+
+// PHP_BINARY under php-fpm points to the fpm binary, not the CLI.
+// Find the matching CLI binary by PHP version, then fall back to /usr/bin/php.
+$php = PHP_BINARY;
+if (str_contains($php, 'fpm')) {
+    $version = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION;
+    foreach ([
+        '/usr/bin/php' . $version,
+        '/usr/local/bin/php' . $version,
+        '/usr/bin/php',
+        '/usr/local/bin/php',
+    ] as $candidate) {
+        if (is_executable($candidate)) {
+            $php = $candidate;
+            break;
+        }
+    }
+}
 
 $installSteps = [];
 $error  = null;
