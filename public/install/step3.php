@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['admin_password']  = $admin_password;
         $_SESSION['admin_name']      = $admin_name;
 
-        header('Location: ?step=4');
+        header('Location: index.php?step=4');
         exit;
     }
 }

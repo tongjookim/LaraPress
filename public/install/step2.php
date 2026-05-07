@@ -3,12 +3,25 @@
 defined('INSTALL_RUNNING') or die('직접 접근이 금지되어 있습니다.');
 
 $error = '';
+
+// .env 파일에서 기존 DB 설정 읽기 (세션이 없을 때 기본값으로 사용)
+$envDefaults = [];
+$envPath = dirname(dirname(__DIR__)) . '/.env';
+if (file_exists($envPath)) {
+    foreach (file($envPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+        if (preg_match('/^(DB_HOST|DB_PORT|DB_DATABASE|DB_USERNAME|DB_PASSWORD)=(.*)$/', trim($line), $m)) {
+            $val = trim($m[2], '"');
+            $envDefaults[strtolower($m[1])] = $val;
+        }
+    }
+}
+
 $formData = [
-    'db_host'     => $_SESSION['db_host'] ?? 'localhost',
-    'db_port'     => $_SESSION['db_port'] ?? '3306',
-    'db_database' => $_SESSION['db_database'] ?? '',
-    'db_username' => $_SESSION['db_username'] ?? '',
-    'db_password' => $_SESSION['db_password'] ?? '',
+    'db_host'     => $_SESSION['db_host'] ?? $envDefaults['db_host'] ?? 'localhost',
+    'db_port'     => $_SESSION['db_port'] ?? $envDefaults['db_port'] ?? '3306',
+    'db_database' => $_SESSION['db_database'] ?? $envDefaults['db_database'] ?? '',
+    'db_username' => $_SESSION['db_username'] ?? $envDefaults['db_username'] ?? '',
+    'db_password' => $_SESSION['db_password'] ?? $envDefaults['db_password'] ?? '',
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -47,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['db_password'] = $password;
             $_SESSION['db_version']  = $dbVersion;
 
-            header('Location: ?step=3');
+            header('Location: index.php?step=3');
             exit;
         } catch (PDOException $e) {
             $msg = $e->getMessage();
@@ -111,6 +124,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                autocomplete="current-password">
     </div>
 
+    <?php if ($error): ?>
+    <div id="error-bottom" class="p-3 bg-red-50 border-l-4 border-red-400 rounded-r-lg">
+        <p class="text-red-700 text-sm font-medium"><?= htmlspecialchars($error) ?></p>
+    </div>
+    <?php endif; ?>
+
     <div class="flex justify-between items-center pt-4 border-t">
         <a href="?step=1" class="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition text-sm">
             ← 이전
@@ -120,3 +139,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </button>
     </div>
 </form>
+<?php if ($error): ?>
+<script>document.getElementById('error-bottom').scrollIntoView({behavior:'smooth',block:'center'});</script>
+<?php endif; ?>

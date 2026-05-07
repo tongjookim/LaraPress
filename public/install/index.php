@@ -1,5 +1,6 @@
 <?php
 // install/index.php
+ob_start();
 session_start();
 
 $installedLock = __DIR__ . '/installed.lock';
@@ -54,7 +55,8 @@ function isAlreadyConfigured(string $rootDir): bool
     }
 }
 
-$alreadyInstalled = file_exists($installedLock) || isAlreadyConfigured($rootDir);
+// installed.lock 파일이 있을 때만 완료 처리 (isAlreadyConfigured는 DB 간헐적 응답으로 마법사를 차단하므로 제외)
+$alreadyInstalled = file_exists($installedLock);
 
 // 재설치 모드
 if (isset($_GET['reset'])) {
