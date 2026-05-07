@@ -3,7 +3,7 @@
 session_start();
 
 $installedLock = __DIR__ . '/installed.lock';
-$rootDir = dirname(__DIR__);
+$rootDir = dirname(dirname(__DIR__));
 
 function parseEnvFile(string $path): array
 {

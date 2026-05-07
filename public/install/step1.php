@@ -2,7 +2,7 @@
 // install/step1.php
 defined('INSTALL_RUNNING') or die('직접 접근이 금지되어 있습니다.');
 
-$rootDir = dirname(__DIR__);
+$rootDir = dirname(dirname(__DIR__));
 
 $requirements = [
     'PHP >= 8.1' => [

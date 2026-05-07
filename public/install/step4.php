@@ -7,7 +7,7 @@ if (!isset($_SESSION['db_host'], $_SESSION['site_name'], $_SESSION['admin_userna
     exit;
 }
 
-$rootDir  = realpath(dirname(__DIR__));
+$rootDir  = realpath(dirname(dirname(__DIR__)));
 $php      = PHP_BINARY;
 $artisan  = $rootDir . '/artisan';
 
