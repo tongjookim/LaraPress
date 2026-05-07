@@ -21,13 +21,12 @@ use App\Http\Controllers\AdminMailController;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Route;
 
-// 랜딩 페이지
+// 홈 (.env SHOW_LANDING_PAGE=true 이면 랜딩 페이지, 기본값 false 이면 CMS 홈)
 Route::get('/', function () {
-    return view('welcome');
-})->name('landing');
+    if (config('larapress.show_landing_page')) {
+        return view('welcome');
+    }
 
-// 데모 홈 (레이아웃 스킨에 따라 동적 뷰)
-Route::get('/demo', function () {
     try {
         $layoutSkin = Setting::get('layout_skin', 'basic');
         $homeView = "skin.layout.{$layoutSkin}.home";

@@ -298,17 +298,18 @@
         padding: 0 16px;
         gap: 0;
         white-space: nowrap;
-        border-bottom: 1px solid var(--nyt-border);
+        border-bottom: none;
     }
     .nyt-secnav-inner a {
         font-family: var(--nyt-sans);
         font-size: 13px;
         font-weight: 600;
         color: var(--nyt-gray-dark);
-        padding: 10px 14px;
-        display: block;
+        padding: 10px 14px 9px;
+        display: inline-block;
         border-bottom: 3px solid transparent;
         transition: border-color .15s;
+        margin-bottom: -1px;
     }
     .nyt-secnav-inner a:hover { border-bottom-color: var(--nyt-black); text-decoration: none; color: var(--nyt-black); }
     .nyt-secnav-inner a.active { border-bottom-color: var(--nyt-black); color: var(--nyt-black); }
@@ -316,6 +317,7 @@
     /* ── 섹션 내비 드롭다운 ── */
     .nyt-secnav-item {
         display: inline-block;
+        position: relative;
     }
     .nyt-secnav-item > a {
         display: inline-flex;
@@ -332,7 +334,9 @@
     }
     .nyt-secnav-dropdown {
         display: none;
-        position: fixed;
+        position: absolute !important;
+        top: 100% !important;
+        left: 0 !important;
         min-width: 160px;
         background: #fff;
         border: 1px solid var(--nyt-border);
@@ -379,7 +383,7 @@
     .nyt-search-overlay {
         display: none;
         background: #fff;
-        border-bottom: 2px solid var(--nyt-black);
+        border-bottom: none;
         box-shadow: 0 4px 16px rgba(0,0,0,.10);
         z-index: 200;
     }
@@ -446,7 +450,8 @@
         display: grid;
         grid-template-columns: 2fr 1px 1fr;
         gap: 0;
-        border-top: 3px solid var(--nyt-black);
+        border-top: none;
+        margin-top: 12px;
         border-bottom: 1px solid var(--nyt-border);
     }
     /* 카테고리 그리드: 2fr | 1px 구분선 | 1fr */
@@ -511,6 +516,12 @@
             border-top: 1px solid var(--nyt-border);
             margin-top: 14px;
             padding-top: 14px !important;
+        }
+    }
+    /* PC 화면에서는 가로 스크롤 속성을 풀어주어 드롭다운 메뉴가 잘리지 않게 합니다 */
+    @media (min-width: 769px) {
+        .nyt-secnav-scroll {
+            overflow: visible;
         }
     }
     </style>

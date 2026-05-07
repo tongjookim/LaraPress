@@ -11,6 +11,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/views/skin/board/basic/style.css', // basic 스킨용 CSS
                 'resources/views/skin/layout/swn-style/style.css',
+                'resources/views/skin/layout/cobalt-glow/style.css',
             ],
             // public/build 대신 루트의 build 폴더를 사용하도록 명시
             buildDirectory: 'build', 

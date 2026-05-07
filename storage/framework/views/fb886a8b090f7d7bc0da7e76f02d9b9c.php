@@ -63,7 +63,7 @@
 <nav class="nyt-secnav" aria-label="섹션 내비게이션">
     <div class="nyt-secnav-scroll">
     <div class="nyt-secnav-inner">
-        <a href="<?php echo e(url('/demo')); ?>" class="<?php echo e(request()->is('demo') || request()->is('/') ? 'active' : ''); ?>">홈</a>
+        <a href="<?php echo e(route('home')); ?>" class="<?php echo e(request()->is('/') ? 'active' : ''); ?>">홈</a>
         <a href="<?php echo e(route('news.index')); ?>" class="<?php echo e(request()->routeIs('news.index') && !request()->has('category') ? 'active' : ''); ?>">전체 기사</a>
         <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <?php if($cat->children->isNotEmpty()): ?>

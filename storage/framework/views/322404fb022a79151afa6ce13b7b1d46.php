@@ -7,7 +7,7 @@
 ?>
 
 
-<?php $__env->startSection('title', isset($searchQuery) && $searchQuery !== '' ? ' - 검색: ' . $searchQuery : ($currentCategory ? ' - ' . $currentCategory->name : ' - 뉴스')); ?>
+<?php $__env->startSection('title', $currentCategory ? ' - ' . $currentCategory->name : ' - 뉴스'); ?>
 
 <?php $__env->startSection('content'); ?>
 
@@ -16,26 +16,15 @@
 <div class="nyt-container" style="padding-top:16px;">
 
     
-    <?php if(isset($searchQuery) && $searchQuery !== ''): ?>
-    <div class="nyt-section-header" style="display:block;">
-        <p style="font-family:var(--nyt-sans);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--nyt-gray-mid);margin-bottom:6px;">검색 결과</p>
-        <h1 style="font-size:clamp(1.4rem,4vw,2rem);">"<?php echo e($searchQuery); ?>"</h1>
-        <p style="font-family:var(--nyt-sans);font-size:13px;color:var(--nyt-gray-mid);margin-top:4px;">
-            <?php echo e($articles->total()); ?>건의 기사
-            <a href="<?php echo e(route('news.index')); ?>" style="margin-left:12px;color:var(--nyt-gray-mid);text-decoration:underline;">검색 초기화</a>
-        </p>
-    </div>
-    <?php else: ?>
     <div class="nyt-section-header">
         <h1><?php echo e($currentCategory ? $currentCategory->name : '전체 기사'); ?></h1>
         <?php if($currentCategory): ?>
         <a href="<?php echo e(route('news.index')); ?>" class="more">전체 보기 →</a>
         <?php endif; ?>
     </div>
-    <?php endif; ?>
 
     
-    <?php if((!isset($searchQuery) || $searchQuery === '') && $categories->count()): ?>
+    <?php if($categories->count()): ?>
     <div style="display:flex;gap:0;overflow-x:auto;border-bottom:1px solid #e2e2e2;margin-bottom:16px;scrollbar-width:none;">
         <a href="<?php echo e(route('news.index')); ?>"
            style="flex-shrink:0;padding:8px 16px;font-family:var(--nyt-sans);font-size:13px;font-weight:600;border-bottom:<?php echo e(!$currentCategory ? '3px solid #121212' : '3px solid transparent'); ?>;color:<?php echo e(!$currentCategory ? '#121212' : '#666'); ?>;white-space:nowrap;text-decoration:none;">
@@ -53,12 +42,7 @@
 
     <?php if($articles->isEmpty()): ?>
     <div style="text-align:center;padding:80px 0;color:#999;">
-        <?php if(isset($searchQuery) && $searchQuery !== ''): ?>
-        <p style="font-family:var(--nyt-serif);font-size:1.2rem;">"<?php echo e($searchQuery); ?>"에 대한 검색 결과가 없습니다.</p>
-        <a href="<?php echo e(route('news.index')); ?>" style="font-family:var(--nyt-sans);font-size:13px;color:#666;text-decoration:underline;">전체 기사 보기</a>
-        <?php else: ?>
         <p style="font-family:var(--nyt-serif);font-size:1.2rem;">등록된 기사가 없습니다.</p>
-        <?php endif; ?>
     </div>
     <?php else: ?>
 

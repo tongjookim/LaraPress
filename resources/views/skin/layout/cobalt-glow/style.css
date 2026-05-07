@@ -1,0 +1,397 @@
+/* ============================================================
+   Cobalt Glow — style.css
+   Dark glassmorphic theme with cobalt blue glow accents
+   ============================================================ */
+
+/* ── 0. CSS 변수 폴백 ── */
+:root {
+    --site-bg:            #030712;
+    --site-text:          #ffffff;
+    --site-primary:       #3b82f6;
+    --site-primary-dark:  #2563eb;
+    --site-accent:        #60a5fa;
+    --site-nav-bg:        rgba(3, 7, 18, 0.85);
+    --site-nav-text:      #ffffff;
+    --site-topbar-bg:     #030712;
+    --site-topbar-text:   #ffffff;
+    --glow-color:         #3b82f6;
+    --card-bg:            #0f172a;
+    --border-subtle:      rgba(255,255,255,0.06);
+    --border-blue:        rgba(59,130,246,0.25);
+}
+
+/* ── 1. 기본 리셋 & 바디 ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    background-color: var(--site-bg);
+    color: var(--site-text);
+    font-family: 'Inter', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+    position: relative;
+    overflow-x: hidden;
+    margin: 0;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── 2. 배경 Glow 효과 ── */
+.cobalt-bg-glow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -10;
+}
+
+.cobalt-bg-glow::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(ellipse at 50% 20%, var(--glow-color, #3b82f6) 0%, transparent 55%);
+    opacity: 0.08;
+    filter: blur(120px);
+    animation: glowPulse 8s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.07; transform: scale(1); }
+    50%       { opacity: 0.12; transform: scale(1.05); }
+}
+
+/* ── 3. 상단 공지 바 ── */
+.swn-topbar {
+    background: linear-gradient(90deg, var(--site-topbar-bg, #030712) 0%, rgba(59,130,246,0.06) 50%, var(--site-topbar-bg, #030712) 100%);
+    color: var(--site-topbar-text, #fff);
+    border-bottom: 1px solid var(--border-subtle);
+    font-size: 12px;
+    letter-spacing: 0.03em;
+}
+
+/* ── 4. 헤더 영역 (dark override) ── */
+header {
+    background: rgba(3, 7, 18, 0.95) !important;
+    border-bottom: 1px solid var(--border-subtle) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+/* 날짜/유틸 상단 바 */
+header .border-b.border-gray-100 {
+    border-color: var(--border-subtle) !important;
+    color: rgba(255,255,255,0.4) !important;
+}
+
+.swn-datetime {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.04em;
+    font-weight: 500;
+}
+
+/* 유틸 링크 */
+header a,
+header button {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: color .2s;
+    font-size: 12px;
+}
+
+header a:hover,
+header button:hover {
+    color: var(--site-primary);
+}
+
+/* 로고 영역 */
+header .py-6 {
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+}
+
+.font-serif-title {
+    font-family: 'Playfair Display', 'Noto Serif KR', serif;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, #fff 0%, var(--site-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ── 5. 네비게이션 바 ── */
+.cobalt-nav {
+    background: var(--site-nav-bg, rgba(3, 7, 18, 0.85));
+    border-bottom: 1px solid var(--border-subtle);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 0.6rem 0;
+}
+
+.site-nav-link {
+    color: rgba(255,255,255,0.65);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: all .2s ease;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+}
+
+.site-nav-link:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.06);
+}
+
+.site-nav-active {
+    background: var(--site-primary) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 14px rgba(59,130,246,0.35);
+    border-radius: 8px;
+}
+
+/* ── 6. 카드 시스템 ── */
+.cobalt-card {
+    background: var(--card-bg, #0f172a);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1.25rem;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.cobalt-card:hover {
+    border-color: var(--border-blue);
+    box-shadow: 0 24px 48px -12px rgba(0,0,0,0.6),
+                0 0 0 1px rgba(59,130,246,0.1),
+                0 0 60px -20px rgba(59,130,246,0.2);
+    transform: translateY(-3px);
+}
+
+/* 카드 내부 글로우 */
+.cobalt-card-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%, var(--site-primary, #3b82f6), transparent 65%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.cobalt-card:hover .cobalt-card-glow {
+    opacity: 0.07;
+}
+
+/* 카드 내 콘텐츠가 glow 위에 위치하도록 */
+.cobalt-card > *:not(.cobalt-card-glow) {
+    position: relative;
+    z-index: 1;
+}
+
+/* 카드 배경 워터마크 텍스트 */
+.cobalt-card-background-text {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--site-primary, #3b82f6);
+    opacity: 0.03;
+    pointer-events: none;
+    line-height: 1;
+    transform: rotate(-15deg);
+    transition: opacity 0.3s;
+    z-index: 0;
+}
+
+.cobalt-card:hover .cobalt-card-background-text {
+    opacity: 0.06;
+}
+
+/* ── 7. 버튼 유틸리티 ── */
+.site-primary-btn {
+    background: var(--site-primary);
+    color: #fff;
+    border: none;
+    border-radius: 0.625rem;
+    padding: 0.5rem 1.25rem;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all .2s ease;
+    letter-spacing: 0.03em;
+}
+
+.site-primary-btn:hover {
+    background: var(--site-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(59,130,246,0.35);
+}
+
+.site-primary-text { color: var(--site-primary); }
+
+.site-accent-badge {
+    display: inline-block;
+    background: var(--site-accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* ── 8. 입력창 ── */
+.cobalt-input-group {
+    background: #0c1526;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 0.75rem;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.cobalt-input-group:focus-within {
+    border-color: var(--site-primary);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+}
+
+/* Tailwind 입력 클래스 다크 오버라이드 */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+textarea,
+select {
+    background-color: #0c1526;
+    color: #fff;
+    border-color: rgba(255,255,255,0.08);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: rgba(255,255,255,0.25);
+}
+
+/* ── 9. 히어로 이미지 카드 내 텍스트 오버레이 ── */
+.cobalt-card .absolute.bottom-0 {
+    background: linear-gradient(to top, rgba(3,7,18,0.97) 0%, rgba(3,7,18,0.7) 50%, transparent 100%);
+}
+
+/* ── 10. 섹션 레이블 (카테고리 배지) ── */
+.nyt-section-label,
+.cobalt-section-label {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--site-primary);
+    margin-bottom: 4px;
+}
+
+/* ── 11. 라인 클램프 ── */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* ── 12. 푸터 ── */
+.footer-info-bar {
+    background: rgba(255,255,255,0.015);
+    border-top: 1px solid var(--border-subtle);
+}
+
+.footer-nav-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    flex-shrink: 0;
+}
+
+.footer-link {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    transition: color .15s;
+}
+
+.footer-link:hover {
+    color: var(--site-primary);
+}
+
+.press-info-section {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.8;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.press-divider {
+    margin: 0 8px;
+    color: rgba(255,255,255,0.1);
+}
+
+footer {
+    background: #030712;
+}
+
+.cobalt-footer-top {
+    background: rgba(255,255,255,0.018);
+    border-top: 1px solid var(--border-subtle);
+}
+
+.cobalt-footer-main {
+    background: #030712;
+    border-top: 1px solid var(--border-subtle);
+}
+
+/* ── 13. 스크롤바 ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #030712; }
+::-webkit-scrollbar-thumb {
+    background: rgba(59,130,246,0.3);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(59,130,246,0.55); }
+
+/* ── 14. Tailwind 다크 오버라이드 (화이트 배경 제거) ── */
+.bg-white { background-color: rgba(15,23,42,0.95) !important; }
+.bg-gray-50  { background-color: rgba(15,23,42,0.7) !important; }
+.bg-gray-100 { background-color: rgba(15,23,42,0.5) !important; }
+.border-gray-200 { border-color: var(--border-subtle) !important; }
+.border-gray-100 { border-color: var(--border-subtle) !important; }
+.text-gray-900 { color: #fff !important; }
+.text-gray-700 { color: rgba(255,255,255,0.75) !important; }
+.text-gray-600 { color: rgba(255,255,255,0.55) !important; }
+.text-gray-500 { color: rgba(255,255,255,0.4) !important; }
+.text-gray-400 { color: rgba(255,255,255,0.3) !important; }
+.divide-gray-200 > * + * { border-color: var(--border-subtle) !important; }
+
+/* ── 15. 메인 레이아웃 컨테이너 ── */
+main.max-w-7xl {
+    min-height: 60vh;
+}
+
+/* ── 16. 반응형 ── */
+@media (max-width: 1024px) {
+    .cobalt-card:hover { transform: translateY(-1px); }
+}
+
+@media (max-width: 768px) {
+    .swn-topbar { font-size: 11px; padding: 6px 12px; }
+    header .py-6 { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+    .cobalt-card { border-radius: 1rem; }
+    .footer-info-bar .lg\:col-span-2 { grid-column: span 3; }
+}
+
+@media (max-width: 480px) {
+    header .border-b .swn-datetime { display: none; }
+}

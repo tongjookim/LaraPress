@@ -62,7 +62,7 @@
 <nav class="nyt-secnav" aria-label="섹션 내비게이션">
     <div class="nyt-secnav-scroll">
     <div class="nyt-secnav-inner">
-        <a href="{{ url('/demo') }}" class="{{ request()->is('demo') || request()->is('/') ? 'active' : '' }}">홈</a>
+        <a href="{{ route('home') }}" class="{{ request()->is('/') ? 'active' : '' }}">홈</a>
         <a href="{{ route('news.index') }}" class="{{ request()->routeIs('news.index') && !request()->has('category') ? 'active' : '' }}">전체 기사</a>
         @foreach($categories as $cat)
         @if($cat->children->isNotEmpty())

@@ -5,7 +5,7 @@
     "isEntry": true
   },
   "resources/css/app.css": {
-    "file": "assets/app-C-6_cx9E.css",
+    "file": "assets/app-CkPsOaje.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -20,8 +20,13 @@
     "src": "resources/views/skin/board/basic/style.css",
     "isEntry": true
   },
+  "resources/views/skin/layout/cobalt-glow/style.css": {
+    "file": "assets/style-D2lTLgIZ.css",
+    "src": "resources/views/skin/layout/cobalt-glow/style.css",
+    "isEntry": true
+  },
   "resources/views/skin/layout/swn-style/style.css": {
-    "file": "assets/style-F9Iwt-4D.css",
+    "file": "assets/style-CAHvDNaY.css",
     "src": "resources/views/skin/layout/swn-style/style.css",
     "isEntry": true
   }

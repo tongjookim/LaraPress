@@ -4,3 +4,6 @@
 /public/storage
 /storage/*.key
 /public/build
+
+# 퍼블리싱 랜딩 페이지 (개인 컨텐츠)
+/resources/views/welcome.blade.php
